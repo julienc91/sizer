@@ -8,92 +8,97 @@ Handle sizes in an easy way with Golang
 * Date: 2014-08-08
 * Licence: MIT
 * Url: https://github.com/julienc91/sizer
-* Golang version: 1.2 - 1.3
 
 ## Tests
 
 This package includes a set of unit tests you can run with the following command:
 
     go test
-	
+    
 ## Usage
 
 ### Parse sizes from a string
 
-    package main
-	
-	import (
-        "fmt"
-		"github.com/julienc91/sizer"
-	)
-	
-	func main() {
-	
-	    var stringSize = "54 kilo octets"
-		size, _ := sizer.ParseStringSize(stringSize)
-		fmt.Println(size)	
-	}
-	
+```golang
+package main
+
+import (
+    "fmt"
+    "github.com/julienc91/sizer"
+)
+
+func main() {
+
+    var stringSize = "54 kilo octets"
+    size, _ := sizer.ParseStringSize(stringSize)
+    fmt.Println(size)    
+}
+```
+    
 Result:
 
     54ko
-	
+    
 When a size is parsed, it is automatically formatted this way:
 
     <numeric_value>[multiplicator]<base unit>
 
 ### Parse sizes from a JSON file
-	
-    package main
+    
+```
+package main
 
-    import (
-    	"encoding/json"
-	    "fmt"
-	    "github.com/julienc91/sizer"
-    )
+import (
+    "encoding/json"
+    "fmt"
+    "github.com/julienc91/sizer"
+)
 
-    func main() {
-	
-    	var jsonData = []byte(`[{"date": "2014-08-08", "size": "21ko"},
-		                        {"date": "2014-08-07", "size": "23ko"}]`)
-	    type sizes struct {
-		    Date string     "json:`date`"
-		    Size sizer.Size "json:`size`"
-	    }
-	
-	    var s []sizes
-	    err := json.Unmarshal(jsonData, &s)
-	    if err != nil {
-		    panic(err)
-	    }
-	
-	    fmt.Println(s)
-	}
-	
+func main() {
+
+    var jsonData = []byte(`[{"date": "2014-08-08", "size": "21ko"},
+                            {"date": "2014-08-07", "size": "23ko"}]`)
+    type sizes struct {
+        Date string     "json:`date`"
+        Size sizer.Size "json:`size`"
+    }
+
+    var s []sizes
+    err := json.Unmarshal(jsonData, &s)
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Println(s)
+}
+```
+    
 Result:
 
     [{2014-08-08 21ko} {2014-08-07 23ko}]
 
 ### Convert sizes to another unit
 
-    package main
-	
-	import (
-        "fmt"
-		"github.com/julienc91/sizer"
-	)
-	
-	func main() {
-	
-        size, _ := sizer.ParseStringSize("54Mb")
-		size = size.ConvertTo(sizer.Ko)
-	    fmt.Println(size)
-	}
+```
+package main
+
+import (
+    "fmt"
+    "github.com/julienc91/sizer"
+)
+
+func main() {
+
+    size, _ := sizer.ParseStringSize("54Mb")
+    size = size.ConvertTo(sizer.Ko)
+    fmt.Println(size)
+}
+```
 
 Result:
 
     6912ko
-	
+    
 Never forget the floating point precision.
 
 ## Compatible units
