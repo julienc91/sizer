@@ -28,7 +28,6 @@ import (
 )
 
 func main() {
-
     var stringSize = "54 kilo octets"
     size, _ := sizer.ParseStringSize(stringSize)
     fmt.Println(size)    
@@ -45,7 +44,7 @@ When a size is parsed, it is automatically formatted this way:
 
 ### Parse sizes from a JSON file
     
-```
+```golang
 package main
 
 import (
@@ -79,7 +78,7 @@ Result:
 
 ### Convert sizes to another unit
 
-```
+```golang
 package main
 
 import (
